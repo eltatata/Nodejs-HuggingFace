@@ -41,7 +41,10 @@ try {
     let messages = [{ role: "user", content: "What is the largest land animal" }]
     const out = await hf.chatCompletion({
         model: "mistralai/Mistral-7B-Instruct-v0.2",
-        messages
+        messages,
+        max_tokens: 500,
+        temperature: 0.1,
+        seed: 0,
     });
     messages = [...messages, out.choices[0].message]
 
@@ -49,7 +52,10 @@ try {
     messages = [...messages, { role: "user", content: "What is the jaguar and what is its top speed and how does it differ from a cheeta?" }]
     const out2 = await hf.chatCompletion({
         model: "mistralai/Mistral-7B-Instruct-v0.2",
-        messages
+        messages,
+        max_tokens: 500,
+        temperature: 0.1,
+        seed: 0,
     });
     messages = [...messages, out2.choices[0].message]
 
