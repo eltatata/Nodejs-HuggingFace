@@ -1,4 +1,6 @@
 import "dotenv/config";
+import fs from "fs";
+
 import { HfInference } from "@huggingface/inference";
 
 const hf = new HfInference(process.env.HUGGINGFACE_TOKEN)
@@ -86,6 +88,28 @@ try {
             console.log(out)
         }
     }
+} catch (error) {
+    console.log(error);
+}
+
+// -- text to image --
+try {
+    const image = await hf.textToImage({
+        inputs: 'award winning high resolution photo of a giant tortoise/((ladybird)) hybrid, [trending on artstation]',
+        model: 'stabilityai/stable-diffusion-2',
+        parameters: {
+            negative_prompt: 'blurry',
+        }
+    });
+
+    console.log(image);
+
+    const arrayBuffer = await image.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
+
+    fs.writeFileSync('images/image.jpg', buffer);
+
+    console.log("Image saved to images/image.jpg");
 } catch (error) {
     console.log(error);
 }
