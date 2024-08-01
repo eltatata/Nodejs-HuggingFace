@@ -113,3 +113,22 @@ try {
 } catch (error) {
     console.log(error);
 }
+
+// -- text to speech --
+try {
+    const audio = await hf.textToSpeech({
+        inputs: 'Hello, how are you?',
+        model: 'espnet/kan-bayashi_ljspeech_vits',
+    });
+
+    console.log(audio);
+
+    const arrayBuffer = await audio.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
+
+    fs.writeFileSync('audio/audio.mp3', buffer);
+
+    console.log("Audio saved to audio/audio.mp3");
+} catch (error) {
+    console.log(error);
+}
